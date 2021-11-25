@@ -12,7 +12,7 @@ public class RingImpl extends AccessoryImpl implements Ring {
 
     @Override
     public void castSpell(CharacterImpl opp, CharacterImpl wearer) {
-        if (wearer.equals(owner)) {
+        if (checkOwnership(wearer)) {
             Spell spell = new Spell();
             wearer.attack(opp, spell.dmg);
         }

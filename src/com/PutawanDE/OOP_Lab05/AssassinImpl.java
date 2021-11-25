@@ -28,7 +28,10 @@ public class AssassinImpl extends CharacterImpl implements Assassin {
 
         super.currentCharType = opp.currentCharType;
         ScheduledExecutorService exec = new ScheduledThreadPoolExecutor(1);
-        exec.schedule(() -> super.currentCharType = "Assassin", 30, TimeUnit.SECONDS);
+        exec.schedule(() -> {
+            System.out.println("Disguise ended");
+            super.currentCharType = "Assassin";
+        }, 5, TimeUnit.SECONDS);
     }
 
     @Override
@@ -55,6 +58,6 @@ public class AssassinImpl extends CharacterImpl implements Assassin {
     public void vision(CharacterImpl opp) {
         if (isDead) return;
 
-        System.out.println("Opponent Position: (" + opp.getPosX() + ", " + opp.getPosY() + ")");
+        System.out.println(opp.getName() + "'s Position: (" + opp.getPosX() + ", " + opp.getPosY() + ")");
     }
 }

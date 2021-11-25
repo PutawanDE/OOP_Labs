@@ -26,6 +26,7 @@ public class CharacterImpl implements Character {
         this.currentCharType = currentCharType;
         orgCharType = currentCharType;
         updateCharacterStats();
+        hp = maxHp;
         mana = maxMana;
         getStat();
         posX = 0f;
@@ -83,13 +84,17 @@ public class CharacterImpl implements Character {
 
     @Override
     public void equipAccessory(AccessoryImpl accessory) {
-        if (!isDead) equippedAccessory = accessory;
+        if (!isDead) {
+            System.out.println(name + " equipped " + accessory.name);
+            equippedAccessory = accessory;
+        }
     }
 
     @Override
     public void unequipAccessory() {
         if (!isDead) {
             updateCharacterStats();
+            System.out.println(name + " unequipped " + equippedAccessory.name);
             equippedAccessory = null;
         }
     }
@@ -128,7 +133,10 @@ public class CharacterImpl implements Character {
     }
 
     public void useAccessory(CharacterImpl opp) {
-        equippedAccessory.activate(opp, this);
+        if (equippedAccessory != null) {
+            System.out.println(name + " uses " + equippedAccessory.name);
+            equippedAccessory.activate(opp, this);
+        }
     }
 
     private void gameOver() {
@@ -161,7 +169,8 @@ public class CharacterImpl implements Character {
     public void printOutCharStats() {
         System.out.print("Name: " + name + " Lv." + level);
         System.out.print(" | HP/maxHP: " + hp + "/" + maxHp);
-        System.out.print(" | mana/maxMana: " + mana + "/" + maxMana);
+        System.out.print(" | mana/maxMana: " + mana + "/" + maxMana + "\n");
+        System.out.println("Occ: " + currentCharType);
     }
 
     public void printOutAccessoryStats() {

@@ -1,6 +1,6 @@
 package com.PutawanDE.OOP_Lab05;
 
-public class AccessoryImpl implements Accessory {
+public abstract class AccessoryImpl implements Accessory {
     protected CharacterImpl owner;
     protected String name;
 
@@ -34,6 +34,9 @@ public class AccessoryImpl implements Accessory {
         System.out.println("Type: " + type + "Name/Lv.: " + name + "/" + level + " | Owner: " + owner.getName());
     }
 
-    public void activate(CharacterImpl opp, CharacterImpl wearer) {
+    public boolean checkOwnership(CharacterImpl characterToCheck) {
+        return characterToCheck == owner;
     }
+    
+    public abstract void activate(CharacterImpl opp, CharacterImpl wearer);
 }

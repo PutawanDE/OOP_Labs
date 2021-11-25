@@ -9,13 +9,15 @@ public class CrystalImpl extends AccessoryImpl implements Crystal {
 
     @Override
     public void activate(CharacterImpl opp, CharacterImpl wearer) {
-        protect(opp, wearer);
+        if (checkOwnership(wearer)) {
+            protect(opp, wearer);
+        }
     }
 
     @Override
     public void protect(CharacterImpl opp, CharacterImpl wearer) {
         if (opp.orgCharType.equals("Mage")) {
-            wearer.setDefense(20f);
+            wearer.setDefense(BASE_DEFENSE);
         }
     }
 }

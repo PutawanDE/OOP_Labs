@@ -2,10 +2,22 @@ package com.PutawanDE.OOP_Lab05;
 
 public class Lab05 {
     public static void main(String[] args) {
-        CharacterImpl a = new AssassinImpl("Mark");
-        CharacterImpl b = new MageImpl("Porter");
+        AssassinImpl a = new AssassinImpl("Mark");
+        MageImpl b = new MageImpl("Porter");
+
+        Spell sp = new Spell();
 
         a.attack(b, 10f);
+        a.disguise(b);
+        a.distract();
+        b.castAtkSpell(sp, a);
+        b.castDefSpell(sp);
 
+        CrystalImpl r = new CrystalImpl("Elder's ", a);
+        a.equipAccessory(r);
+        a.useAccessory(b);
+
+        a.vision(b);
+        a.takeDown(b, 0f, 0f);
     }
 }
