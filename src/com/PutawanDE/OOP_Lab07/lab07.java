@@ -6,8 +6,7 @@ import java.util.*;
 
 public class lab07 {
     public static void main(String[] args) {
-        Set<Integer> s = new SetFromHashmap<>();
-
+        SetFromHashmap<Integer> s = new SetFromHashmap<>();
 //        s.add(5);
         // Test Add
         System.out.println("TEST ADD");
@@ -106,10 +105,18 @@ public class lab07 {
         }
 
         // Test other types
-        Set<Float> floatSet = new SetFromHashmap<>();
+        SetFromHashmap<Float> floatSet = new SetFromHashmap<>();
         floatSet.add(515.5f);
 
-        Set<String> strSet = new SetFromHashmap<>();
+        SetFromHashmap<String> strSet = new SetFromHashmap<>();
         strSet.add("Hello World");
+
+        SetFromHashmap<Float> b = new SetFromHashmap<>();
+        b.add(5f);
+        System.out.println(floatSet.containsAll(b));
+        b.remove(5f);
+        b.add(515.5f);
+        System.out.println(floatSet.containsAll(b));
+
     }
 }
