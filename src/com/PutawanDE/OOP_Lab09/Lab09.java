@@ -8,7 +8,7 @@ public class Lab09 {
     public static void main(String[] args) {
         String inFileName = "src/com/PutawanDE/OOP_Lab09/lab09_test1.txt";
         String outFileName = "src/com/PutawanDE/OOP_Lab09/lab09_output.txt";
-        String inLine = "";
+        String inLine;
 
         try (FileReader fileReader = new FileReader(inFileName);
              BufferedReader br = new BufferedReader(fileReader);
@@ -19,25 +19,29 @@ public class Lab09 {
             while ((inLine = br.readLine()) != null) {
                 lineNum++;
                 inLine = inLine.trim();
-                String outLine = inLine + " = " + interpretAndCalculate(inLine, lineNum) + "\n";
-                System.out.print(outLine);
-                bw.append(outLine);
+                if (inLine.length() == 0) continue;
+
+                try {
+                    String outLine = inLine + " = " + interpretAndCalculate(inLine, lineNum) + "\n";
+                    System.out.print(outLine);
+                    bw.append(outLine);
+                } catch (ArithmeticException | InputMismatchException e) {
+                    System.out.println("Invalid line: " + inLine);
+                    e.printStackTrace();
+                }
             }
+
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ArithmeticException | InputMismatchException e) {
-            System.out.println("Invalid line: " + inLine);
             e.printStackTrace();
         }
     }
 
     private static double interpretAndCalculate(String line, int lineNum)
             throws InputMismatchException, ArithmeticException {
-        if (line.length() == 0) throw new InputMismatchException("Line " + lineNum + " is empty. ");
-
         Stack<Double> operandStack = new Stack<>();
         Stack<Character> operatorStack = new Stack<>();
         StringBuilder operandStr = new StringBuilder();
+        boolean expectingOperator = false;
 
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
@@ -49,15 +53,18 @@ public class Lab09 {
             if (isEndOfLine && !Character.isDigit(c)) {
                 throw new InputMismatchException("Invalid token: '" + c + "' at the end of line. " + charPos);
             } else if (Character.isDigit(c)) {
-                operandStr.append(c);
+                if (!expectingOperator) operandStr.append(c);
+                else throw new InputMismatchException("Space between number digits is not allowed.  " + charPos);
             }
 
             // If an operator is found, or end of line is reached,
             // then trigger the calculation of the last 2 operands
             if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || isEndOfLine) {
+                expectingOperator = false;
+
                 if (operandStr.length() > 0) {
-                    String str = operandStr.toString().trim();
-                    double operand = Integer.parseInt(str);
+                    String numStr = operandStr.toString().trim();
+                    double operand = Integer.parseInt(numStr);
                     operandStack.push(operand);
                 } else {
                     throw new InputMismatchException("Operator mismatch. " + charPos);
@@ -91,7 +98,9 @@ public class Lab09 {
                 }
                 operatorStack.push(c);
                 operandStr.setLength(0); // Empty string builder
-            } else if (!Character.isDigit(c) && c != ' ') { // Not number, space, operator, or end of line
+            } else if (c == ' ') {
+                if (operandStr.length() > 0) expectingOperator = true;
+            } else if (!Character.isDigit(c)) { // Not number, space, operator, or end of line
                 throw new InputMismatchException("Invalid token: '" + c + "' at " + charPos);
             }
         }
@@ -102,7 +111,7 @@ public class Lab09 {
         // From https://stackoverflow.com/questions/14137989/
         // java-division-by-zero-doesnt-throw-an-arithmeticexception-why/14138002#comment119309143_14138032
         if (!Double.isFinite(result))
-            throw new ArithmeticException(" NaN, or Infinity,or -Infinity " +
+            throw new ArithmeticException(" NaN, or Infinity, or -Infinity " +
                     "- may caused by division by zero. [Ln:" + lineNum + "]");
 
         return result;
