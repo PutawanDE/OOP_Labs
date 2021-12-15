@@ -8,6 +8,11 @@ public class Lab09 {
     public static void main(String[] args) {
         String inFileName = "src/com/PutawanDE/OOP_Lab09/lab09_test1.txt";
         String outFileName = "src/com/PutawanDE/OOP_Lab09/lab09_output.txt";
+
+        readAndCalculate(inFileName, outFileName);
+    }
+
+    public static void readAndCalculate(String inFileName, String outFileName) {
         String inLine;
 
         try (FileReader fileReader = new FileReader(inFileName);
@@ -36,7 +41,7 @@ public class Lab09 {
         }
     }
 
-    private static double interpretAndCalculate(String line, int lineNum)
+    public static double interpretAndCalculate(String line, int lineNum)
             throws InputMismatchException, ArithmeticException {
         Stack<Double> operandStack = new Stack<>();
         Stack<Character> operatorStack = new Stack<>();
