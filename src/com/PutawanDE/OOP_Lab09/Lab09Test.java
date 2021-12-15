@@ -45,6 +45,11 @@ class Lab09Test {
                 () -> Lab09.interpretAndCalculate("1--5", 1));
         assertEquals("Operator mismatch. [Ln:1, Col:3]",
                 thrownException.getMessage());
+
+        thrownException = assertThrows(ArithmeticException.class,
+                () -> Lab09.interpretAndCalculate("6/0", 1));
+        assertEquals(" NaN, or Infinity, or -Infinity - may caused by division by zero. [Ln:1]",
+                thrownException.getMessage());
     }
 
     @Test
