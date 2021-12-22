@@ -48,10 +48,10 @@ class Lab12Test {
         Path testFile = Paths.get("src/com/PutawanDE/OOP_Lab12/lab12_test2.txt");
         Path output = Paths.get("src/com/PutawanDE/OOP_Lab12/lab12_test2_out.txt");
         Path expectedFile = Paths.get("src/com/PutawanDE/OOP_Lab12/lab12_test2_expected.txt");
+
         Lab12.readAndCalculate(testFile.toString(), output.toString());
-        Charset charset = StandardCharsets.US_ASCII;
-        List<String> outFileLines = Files.readAllLines(output, charset);
-        List<String> expectedFileLines = Files.readAllLines(expectedFile, charset);
+        List<String> outFileLines = Files.readAllLines(output);
+        List<String> expectedFileLines = Files.readAllLines(expectedFile);
         assertEquals(outFileLines, expectedFileLines);
     }
 }
