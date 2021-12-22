@@ -6,10 +6,12 @@ import java.util.Stack;
 
 public class Lab09 {
     public static void main(String[] args) {
-        String inFileName = "src/com/PutawanDE/OOP_Lab09/lab09_test1.txt";
+        String inFileName = "src/com/PutawanDE/OOP_Lab09/lab09_test3.txt";
         String outFileName = "src/com/PutawanDE/OOP_Lab09/lab09_output.txt";
 
-        readAndCalculate(inFileName, outFileName);
+        for (int i = 0; i < 100000; i++) {
+            readAndCalculate(inFileName, outFileName);
+        }
     }
 
     public static void readAndCalculate(String inFileName, String outFileName) {
