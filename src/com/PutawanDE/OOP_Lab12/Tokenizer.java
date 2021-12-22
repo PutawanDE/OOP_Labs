@@ -14,7 +14,10 @@ public class Tokenizer {
     public Tokenizer(String inputExp, int lineNum) {
         this.inputExp = inputExp;
         this.lineNum = lineNum;
+        tokenize();
+    }
 
+    private void tokenize() {
         String[] separated = inputExp.split(expRegex);
         for (String s : separated) {
             if (!s.trim().equals("")) { // eliminate whitespace
