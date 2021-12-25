@@ -26,7 +26,7 @@ public class Lab13 {
                 if (inLine.length() == 0) continue;
 
                 try {
-                    double result = expParser.evaluateExp(inLine, lineNum);
+                    double result = expParser.evaluateExprString(inLine, lineNum);
                     String outLine = inLine + " = " + result + "\n";
                     System.out.print(outLine);
                     bw.append(outLine);
