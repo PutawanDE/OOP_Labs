@@ -2,7 +2,7 @@ package com.PutawanDE.OOP_Lab15;
 
 import java.io.*;
 
-public class Lab14 {
+public class Lab15 {
     public static void main(String[] args) {
         String inFileName = "src/com/PutawanDE/OOP_Lab12/lab12_test2.txt";
         String outFileName = "src/com/PutawanDE/OOP_Lab12/lab12_output.txt";

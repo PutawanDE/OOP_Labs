@@ -2,9 +2,14 @@ package com.PutawanDE.OOP_Lab15;
 
 public class ExpEvaluatorLL1 {
     private Tokenizer tokenizer;
+    private final ArithExprFactory arithExprFactory;
+
+    public ExpEvaluatorLL1() {
+        arithExprFactory = ArithExprFactory.getInstance();
+    }
 
     public double evaluateExprString(String exp, int lineNum) throws ArithmeticException, SyntaxError {
-        Expr resultExpr = buildNewExprAST(exp, lineNum);
+        ArithExpr resultExpr = buildNewExprAST(exp, lineNum);
 
         if (!tokenizer.isEmpty()) throw new SyntaxError("Invalid line[" + lineNum + "]: " + exp);
 
@@ -17,43 +22,43 @@ public class ExpEvaluatorLL1 {
         return answer;
     }
 
-    public Expr buildNewExprAST(String exp, int lineNum) throws SyntaxError {
+    public ArithExpr buildNewExprAST(String exp, int lineNum) throws SyntaxError {
         tokenizer = new Tokenizer(exp, lineNum);
         return parseE();
     }
 
-    private Expr parseE() throws SyntaxError {
-        Expr e = parseT();
+    private ArithExpr parseE() throws SyntaxError {
+        ArithExpr e = parseT();
 
         while (tokenizer.peek("+") || tokenizer.peek("-")) {
             String operator = tokenizer.consume();
 
-            if (operator.equals("+")) e = new BinaryArithExpr(e, "+", parseT());
-            else if (operator.equals("-")) e = new BinaryArithExpr(e, "-", parseT());
+            if (operator.equals("+")) e = arithExprFactory.newBinArithExpr(e, "+", parseT());
+            else if (operator.equals("-")) e = arithExprFactory.newBinArithExpr(e, "-", parseT());
         }
         return e;
     }
 
-    private Expr parseT() throws SyntaxError {
-        Expr e = parseF();
+    private ArithExpr parseT() throws SyntaxError {
+        ArithExpr e = parseF();
         while (tokenizer.peek("*") || tokenizer.peek("/") || tokenizer.peek("%")) {
             String operator = tokenizer.consume();
 
             switch (operator) {
-                case "*" -> e = new BinaryArithExpr(e, "*", parseF());
-                case "/" -> e = new BinaryArithExpr(e, "/", parseF());
-                case "%" -> e = new BinaryArithExpr(e, "%", parseF());
+                case "*" -> e = arithExprFactory.newBinArithExpr(e, "*", parseF());
+                case "/" -> e = arithExprFactory.newBinArithExpr(e, "/", parseF());
+                case "%" -> e = arithExprFactory.newBinArithExpr(e, "%", parseF());
             }
         }
         return e;
     }
 
-    private Expr parseF() throws SyntaxError {
+    private ArithExpr parseF() throws SyntaxError {
         if (isNumber(tokenizer.peek())) {
-            return new DoubleLit(Double.parseDouble(tokenizer.consume()));
+            return arithExprFactory.newDoubleLit(Double.parseDouble(tokenizer.consume()));
         } else {
             tokenizer.consume("(");
-            Expr e = parseE();
+            ArithExpr e = parseE();
             tokenizer.consume(")");
             return e;
         }

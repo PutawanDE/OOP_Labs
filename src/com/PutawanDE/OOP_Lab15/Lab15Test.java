@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class Lab14Test {
+class Lab15Test {
     ExpEvaluatorLL1 expParser = new ExpEvaluatorLL1();
 
     @Test
@@ -85,7 +85,7 @@ class Lab14Test {
         Path output = Paths.get("src/com/PutawanDE/OOP_Lab12/lab12_test2_out.txt");
         Path expectedFile = Paths.get("src/com/PutawanDE/OOP_Lab12/lab12_test2_expected.txt");
 
-        Lab14.readAndCalculate(testFile.toString(), output.toString());
+        Lab15.readAndCalculate(testFile.toString(), output.toString());
         List<String> outFileLines = Files.readAllLines(output);
         List<String> expectedFileLines = Files.readAllLines(expectedFile);
         assertEquals(outFileLines, expectedFileLines);

@@ -1,10 +1,10 @@
 package com.PutawanDE.OOP_Lab15;
 
-public class BinaryArithExpr implements Expr {
-    private Expr left, right;
+public class BinaryArithExpr implements ArithExpr {
+    private ArithExpr left, right;
     private String op;
 
-    public BinaryArithExpr(Expr left, String op, Expr right) {
+    public BinaryArithExpr(ArithExpr left, String op, ArithExpr right) {
         this.left = left;
         this.right = right;
         this.op = op;

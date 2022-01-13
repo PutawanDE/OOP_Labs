@@ -1,6 +1,6 @@
 package com.PutawanDE.OOP_Lab15;
 
-public class DoubleLit implements Expr {
+public class DoubleLit implements ArithExpr {
     private double val;
 
     public DoubleLit(Double val) {
