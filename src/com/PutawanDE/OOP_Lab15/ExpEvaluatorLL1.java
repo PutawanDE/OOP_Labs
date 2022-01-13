@@ -33,8 +33,8 @@ public class ExpEvaluatorLL1 {
         while (tokenizer.peek("+") || tokenizer.peek("-")) {
             String operator = tokenizer.consume();
 
-            if (operator.equals("+")) e = arithExprFactory.newBinArithExpr(e, "+", parseT());
-            else if (operator.equals("-")) e = arithExprFactory.newBinArithExpr(e, "-", parseT());
+            if (operator.equals("+")) e = arithExprFactory.newArithExpr(e, "+", parseT());
+            else if (operator.equals("-")) e = arithExprFactory.newArithExpr(e, "-", parseT());
         }
         return e;
     }
@@ -45,9 +45,9 @@ public class ExpEvaluatorLL1 {
             String operator = tokenizer.consume();
 
             switch (operator) {
-                case "*" -> e = arithExprFactory.newBinArithExpr(e, "*", parseF());
-                case "/" -> e = arithExprFactory.newBinArithExpr(e, "/", parseF());
-                case "%" -> e = arithExprFactory.newBinArithExpr(e, "%", parseF());
+                case "*" -> e = arithExprFactory.newArithExpr(e, "*", parseF());
+                case "/" -> e = arithExprFactory.newArithExpr(e, "/", parseF());
+                case "%" -> e = arithExprFactory.newArithExpr(e, "%", parseF());
             }
         }
         return e;
@@ -55,7 +55,7 @@ public class ExpEvaluatorLL1 {
 
     private ArithExpr parseF() throws SyntaxError {
         if (isNumber(tokenizer.peek())) {
-            return arithExprFactory.newDoubleLit(Double.parseDouble(tokenizer.consume()));
+            return arithExprFactory.newArithExpr(Double.parseDouble(tokenizer.consume()));
         } else {
             tokenizer.consume("(");
             ArithExpr e = parseE();

@@ -13,11 +13,11 @@ public class ArithExprFactory {
         return instance;
     }
 
-    public BinaryArithExpr newBinArithExpr(ArithExpr left, String op, ArithExpr right) {
+    public ArithExpr newArithExpr(ArithExpr left, String op, ArithExpr right) {
         return new BinaryArithExpr(left, op, right);
     }
 
-    public DoubleLit newDoubleLit(Double val) {
+    public ArithExpr newArithExpr(Double val) {
         return new DoubleLit(val);
     }
 }
