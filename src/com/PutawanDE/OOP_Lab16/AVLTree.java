@@ -1,13 +1,17 @@
 package com.PutawanDE.OOP_Lab16;
 
 import java.util.Random;
+import java.util.Stack;
 
 interface Iterator<E> {
     boolean hasNext();
+
     E next();
 }
+
 interface Tree<E> {
     void add(E e);
+
     Iterator<E> iterator();
 }
 
@@ -15,9 +19,11 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
     private static class TreeNode<E extends Comparable<? super E>> {
         E val;
         TreeNode<E> left, right;
+
         public TreeNode(E val) {
             this.val = val;
         }
+
         public TreeNode(E val, TreeNode<E> left, TreeNode<E> right) {
             this.val = val;
             this.left = left;
@@ -36,11 +42,10 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
             TreeNode<E> l = left, r = right;
             if (e.compareTo(val) < 0) {
                 l = l == null ? new TreeNode<>(e) : l.insert(e);
-            }
-            else
+            } else
                 r = r == null ? new TreeNode<>(e) : r.insert(e);
             // rebalance if needed
-            return rebalance(val, l ,r);
+            return rebalance(val, l, r);
         }
 
         private TreeNode<E> rebalance(E val, TreeNode<E> l, TreeNode<E> r) {
@@ -53,15 +58,13 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
                     r = new TreeNode<>(val, lr, r);
                     val = l.val;
                     l = ll;
-                }
-                else { // case 2
+                } else { // case 2
                     TreeNode<E> lrl = lr.left, lrr = lr.right;
                     r = new TreeNode<>(val, lrr, r);
                     val = lr.val;
                     l = new TreeNode<>(l.val, ll, lrl);
                 }
-            }
-            else if (rh - lh > 1) { // heavy right
+            } else if (rh - lh > 1) { // heavy right
                 TreeNode<E> rl = r.left, rr = r.right;
                 int rlh = height(rl), rrh = height(rr);
                 if (rlh - rrh > 0) { // case 3
@@ -69,8 +72,7 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
                     l = new TreeNode<>(val, l, rll);
                     val = rl.val;
                     r = new TreeNode<>(r.val, rlr, rr);
-                }
-                else { // case 4
+                } else { // case 4
                     l = new TreeNode<>(val, l, rl);
                     val = r.val;
                     r = rr;
@@ -92,8 +94,33 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // FIXME
-        throw new RuntimeException("unimplemented");
+        return new Iterator<>() {
+            private Stack<TreeNode<E>> stack = new Stack<>();
+            private boolean startIterate = false;
+
+            @Override
+            public boolean hasNext() {
+                if (!startIterate) {
+                    return root != null;
+                } else {
+                    return !stack.empty();
+                }
+            }
+
+            @Override
+            public E next() {
+                if (stack.empty() && !startIterate) {
+                    stack.push(root);
+                    startIterate = true;
+                }
+
+                TreeNode<E> currentNode = stack.pop();
+                if (currentNode.right != null) stack.push(currentNode.right);
+                if (currentNode.left != null) stack.push(currentNode.left);
+
+                return currentNode.val;
+            }
+        };
     }
 
     public static void main(String[] args) {
@@ -105,7 +132,7 @@ public class AVLTree<E extends Comparable<? super E>> implements Tree<E> {
         Random rand = new Random(seed);
         // create a random permutation
         for (int i = 0; i < N; i++) {
-            int j = rand.nextInt(N-i)+i;
+            int j = rand.nextInt(N - i) + i;
             int tmp = a[i];
             a[i] = a[j];
             a[j] = tmp;
