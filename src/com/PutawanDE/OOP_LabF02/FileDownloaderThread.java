@@ -10,9 +10,9 @@ public class FileDownloaderThread extends FileDownloader implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("FileDownloaderThread Number: " + threadNum + " start downloading from: " + super.fileUrl);
-        super.startDownload();
-        System.out.println("FileDownloaderThread Number: " + threadNum + " finish downloading from: " + super.fileUrl +
-                " will save as: " + super.fileName);
+        System.out.println("FileDownloaderThread Number: " + threadNum + " start downloading from: " + fileUrl);
+        startDownload();
+        System.out.println("FileDownloaderThread Number: " + threadNum + " finish downloading from: " + fileUrl +
+                " will save as: " + fileName);
     }
 }

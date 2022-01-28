@@ -12,8 +12,8 @@ public class FileZipperThread extends FileZipper implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("FileZipperThread Number: " + threadNum + " start zipping file: " + super.sourceFileName);
-        super.zipFile();
-        System.out.println("FileZipperThread Number: " + threadNum + " finish zipping file: " + super.sourceFileName);
+        System.out.println("FileZipperThread Number: " + threadNum + " start zipping file: " + sourceFileName);
+        zipFile();
+        System.out.println("FileZipperThread Number: " + threadNum + " finish zipping file: " + sourceFileName);
     }
 }

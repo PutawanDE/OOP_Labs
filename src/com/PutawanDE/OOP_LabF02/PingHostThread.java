@@ -10,11 +10,11 @@ public class PingHostThread extends PingHost implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("PingHostThread Number: " + threadNum + " start ping: " + super.host + " " + super.port);
-        if (super.startPing()) {
-            System.out.println("PingHostThread Number: " + threadNum + " " + super.host + " " + super.port + " is available.");
+        System.out.println("PingHostThread Number: " + threadNum + " start ping: " + host + " " + port);
+        if (startPing()) {
+            System.out.println("PingHostThread Number: " + threadNum + " " + host + " " + port + " is available.");
         } else {
-            System.out.println("PingHostThread Number: " + threadNum + " " + super.host + " " + super.port + " is not reachable.");
+            System.out.println("PingHostThread Number: " + threadNum + " " + host + " " + port + " is not reachable.");
         }
     }
 }
